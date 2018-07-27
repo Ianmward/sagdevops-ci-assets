@@ -13,6 +13,9 @@
 	
 	<target name="deployWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createDeployerSpec,execProjectAutomator,triggerDeploy">
 	</target>
+	
+	<target name="stageWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createStageDeployerSpec,execProjectAutomator,triggerStage">
+	</target>
 
 	<target name="startDeployment">		
 		<echo message="Start deploying ${projectName}" />
@@ -41,6 +44,9 @@
 		
 	<target name="createDeployerSpec" depends="cleanupDeployerSpec,setupDeployerSpec">		
 	</target>
+		
+	<target name="createStageDeployerSpec" depends="cleanupDeployerSpec,setupStageDeployerSpec">		
+	</target>
 	
 	<target name="cleanupDeployerSpec">
 		<if>
@@ -64,6 +70,27 @@
 			<param name="testISPort" expression="${testISPort}" />
 			<param name="testISUsername" expression="${testISUsername}" />
 			<param name="testISPassword" expression="${testISPassword}" />
+			
+			<!-- general props -->
+			<param name="repoName" expression="${repositoryName}" />
+			<param name="repoPath" expression="${buildOutputDir}" />
+			<param name="projectName" expression="${projectName}" />				
+		</xslt>				
+	</target>
+	
+	<target name="setupStageDeployerSpec" description="Creates the project automator xml with XSLT based on the given variables.">				
+		<xslt style="${initialXSLT}" in="${deployerProjectDefinitionTemplate}" out="${deployerProjectDefinition}">
+			<!--build/deployer server props -->
+			<param name="deployerHost" expression="${stageHost}" />
+			<param name="deployerPort" expression="${stagePort}" />
+			<param name="deployerUsername" expression="${stageUsername}" />
+			<param name="deployerPassword" expression="${stagePassword}" />
+			
+			<!--target server props -->
+			<param name="testISHost" expression="${stageHost}" />
+			<param name="testISPort" expression="${stagePort}" />
+			<param name="testISUsername" expression="${stageUsername}" />
+			<param name="testISPassword" expression="${stagePassword}" />
 			
 			<!-- general props -->
 			<param name="repoName" expression="${repositoryName}" />
@@ -104,6 +131,29 @@
 			<arg line="-port ${deployerPort}"/>
 			<arg line="-user ${deployerUsername}"/>
 			<arg line="-pwd ${deployerPassword}"/>
+			<arg value="-force"/>
+		</exec>
+		
+		<if>			
+		<equals arg1="${appState}" arg2="0" trim="true"/>			
+			<then>
+				<echo message="WMDeployer successfully executed."/>
+			</then>
+			<else>			    				
+				<fail message="WMDeployer failed."/>
+			</else>
+		</if>		
+	</target>	
+	
+	<target name="triggerStage">
+		<exec executable="${deployerInstallationPath}/${deployerExecutable}" dir="${deployerInstallationPath}" failonerror="true" resultproperty="appState">
+			<arg value="--deploy"/>
+			<arg line="-project ${projectName}"/>
+			<arg line="-dc myDeployment"/>
+			<arg line="-host ${stageHost}"/>
+			<arg line="-port ${stagePort}"/>
+			<arg line="-user ${stageUsername}"/>
+			<arg line="-pwd ${stagePassword}"/>
 			<arg value="-force"/>
 		</exec>
 		
