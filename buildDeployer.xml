@@ -13,8 +13,8 @@
 	
 	<target name="deployWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createDeployerSpec,execProjectAutomator,triggerDeploy">
 	</target>
-	
-	<target name="stageWM" description="main deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createStageDeployerSpec,execProjectAutomator,triggerStage">
+
+	<target name="stageWM" description="staging deploy task" depends="startDeployment, initPAandDeployerWindows, initPAandDeployerUnix, createStagingDeployerSpec,execProjectAutomator,triggerStage">
 	</target>
 
 	<target name="startDeployment">		
@@ -44,8 +44,8 @@
 		
 	<target name="createDeployerSpec" depends="cleanupDeployerSpec,setupDeployerSpec">		
 	</target>
-		
-	<target name="createStageDeployerSpec" depends="cleanupDeployerSpec,setupStageDeployerSpec">		
+	
+	<target name="createStagingDeployerSpec" depends="cleanupDeployerSpec,setupStagingDeployerSpec">		
 	</target>
 	
 	<target name="cleanupDeployerSpec">
@@ -78,7 +78,8 @@
 		</xslt>				
 	</target>
 	
-	<target name="setupStageDeployerSpec" description="Creates the project automator xml with XSLT based on the given variables.">				
+	
+	<target name="setupStagingDeployerSpec" description="Creates the project automator xml with XSLT based on the given variables.">				
 		<xslt style="${initialXSLT}" in="${deployerProjectDefinitionTemplate}" out="${deployerProjectDefinition}">
 			<!--build/deployer server props -->
 			<param name="deployerHost" expression="${stageHost}" />
