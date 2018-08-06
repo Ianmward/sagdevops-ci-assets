@@ -7,12 +7,18 @@
 		<fileset dir="${SAGHome}/common/lib/ext" includes="enttoolkit.jar" />
 		<fileset dir="${SAGHome}/common/lib" includes="**/gf.javax.mail.jar" />
 		<fileset dir="${SAGHome}/common/lib" includes="wm-isclient.jar" />
+		<fileset dir="${SAGHome}/common/lib" includes="wm-g11nutils.jar" />
+		<fileset dir="${SAGHome}/common/lib/ext" includes="icu4j.jar" />
 		<fileset dir="${SAGHome}/IntegrationServer/lib" includes="wm-isserver.jar" />
-		<fileset dir="./lib" includes="httpunit.jar" />
-		<fileset dir="./lib" includes="junit*.jar" />
-		<fileset dir="./lib" includes="xmlunit*.jar" />
-		<fileset dir="./lib" includes="serviceInterceptor.jar" />
-		<fileset dir="./lib" includes="serviceMockClient.jar" />
+
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="commons-jxpath-1.2.jar" />
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="hamcrest-core.jar" />
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="httpunit.jar" />
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="junit.jar" />
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="serviceInterceptor.jar" />
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="serviceMockClient.jar" />
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="wmjxpath.jar" />
+		<fileset dir="${SAGHome}/common/lib/testsuite" includes="xmlunit1.0.jar" />
 	</path>
 	
 	<target name="startTest" depends="jenkinsCheck">		
