@@ -5,7 +5,7 @@
 
 	<path id="junitClasspath">
 		<fileset dir="${SAGHome}/common/lib/ext" includes="enttoolkit.jar" />
-		<fileset dir="${SAGHome}/common/lib" includes="**/gf.javax.mail.jar" />
+		<fileset dir="${SAGHome}/common/lib" includes="**/gf.jakarta.mail.jar" />
 		<fileset dir="${SAGHome}/common/lib" includes="wm-isclient.jar" />
 		<fileset dir="${SAGHome}/common/lib" includes="wm-g11nutils.jar" />
 		<fileset dir="${SAGHome}/common/lib/ext" includes="icu4j.jar" />
